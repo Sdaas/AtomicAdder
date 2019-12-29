@@ -7,13 +7,14 @@ public class AtomicAdder {
         this.memory = memory;
     }
 
+    // This is NOT a thread-safe way to implement an adder
     public void buggyAdd(int value) {
         int tmp = memory.get();
         memory.set(tmp + value);
     }
 
-    // Uses the Compare and Set approach, as described in
-    // https://en.wikipedia.org/wiki/Compare-and-swap
+    // A thread-safe way to implement an adder
+    // Uses a spin-lock in conjunction with compare-and-swap
     public void add(int x ) {
         boolean done = false;
         while ( !done ) {

@@ -22,7 +22,7 @@ public class AdderDriver extends Thread {
         latch.countDown();
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args)  {
 
         int threadCount = 10;
         Memory memory = new Memory();
@@ -38,7 +38,12 @@ public class AdderDriver extends Thread {
         for(AdderDriver d : drivers) {
             d.start();
         }
-       latch.await();
+
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // Print out the value of the adder ..
         System.out.println("The value of the adder is " + memory.get());
